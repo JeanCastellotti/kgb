@@ -29,8 +29,22 @@ app.use(stylus.middleware(path.join(__dirname, 'public')));
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routes
 app.get('/', (req, res) => {
 	res.render('index', { title: 'Accueil' });
+});
+
+app.get('/login', (req, res) => {
+	res.render('login', { title: 'Se connecter' });
+});
+
+app.post('/login', (req, res) => {
+	const { username, password } = req.body;
+	let error;
+	if (username !== 'secret' || password !== 'secret') {
+		error = 'Username or password invalid';
+	}
+	res.render('login', { title: 'Se connecter', error });
 });
 
 app.listen(3000, () => {
